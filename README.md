@@ -134,5 +134,3 @@ npm run dev
 ## Contributors
 
 - **Your Name** ([GitHub](https://github.com/codeMaestro78))
-
-## License
