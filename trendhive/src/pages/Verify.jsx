@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { backendUrl } from "../config/config"; // Fixed import
 import { toast } from "react-toastify";
-
-// Define backendUrl directly
-const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 
 const Verify = () => {
   const { navigate, token, setCartItems } = useContext(ShopContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
   
@@ -19,7 +17,7 @@ const Verify = () => {
         return null;
       }
       const response = await axios.post(
-        backendUrl + "/api/order/verifyStripe",
+        `${backendUrl}/api/order/verifyStripe`,
         { success, orderId },
         { headers: { token } }
       );
