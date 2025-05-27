@@ -23,8 +23,6 @@ This is a fully functional **MERN stack** fashion e-commerce website built using
 - **Authentication**: JWT (JSON Web Token)
 - **Payments**: Stripe & Razorpay API
 - **State Management**: Redux Toolkit
-- **Hosting**: Vercel (Frontend), Render/Heroku (Backend)
-
 ## Installation
 
 ### Prerequisites

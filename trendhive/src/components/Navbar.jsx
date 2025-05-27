@@ -21,7 +21,7 @@ const Navbar = () => {
     setCartItems({});
   };
   return (
-    <div className="flex items-center justify-between py-5 font-medium">
+    <div className="flex items-center justify-between py-5 font-medium relative z-50">
       <Link to="/">
         <img
           src={assets.logo}
@@ -77,8 +77,8 @@ const Navbar = () => {
           />
 
           {token && (
-            <div className="invisible group-hover:visible absolute top-full right-0 pt-2">
-              <div className="bg-slate-100 text-gray-500 rounded-lg shadow-lg w-36">
+            <div className="invisible group-hover:visible absolute top-full right-0 pt-2 z-50">
+              <div className="bg-white text-gray-500 rounded-lg shadow-lg w-36 border border-gray-100">
                 <p
                   href="#"
                   className="block w-full text-left px-4 py-2 hover:bg-slate-200 hover:text-black cursor-pointer transition-colors"

@@ -13,7 +13,35 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const initializeProducts = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(backendUrl + "/api/product/list");
+      if (response.data.success) {
+        setProducts(response.data.products);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      toast.error('Failed to fetch products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    initializeProducts();
+  }, [backendUrl]);
+
+  useEffect(() => {
+    if (token) {
+      getUserCart(token);
+    }
+  }, [token]);
 
   const addToCart = async (itemId, size) => {
     if (!size) {
@@ -105,20 +133,6 @@ const ShopContextProvider = (props) => {
     return totalAmount;
   };
 
-  const getProductsData = async () => {
-    try {
-      const response = await axios.get(backendUrl + "/api/product/list");
-      if (response.data.success) {
-        setProducts(response.data.products);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
-
   const getUserCart = async (token) => {
     try {
       const response = await axios.post(
@@ -134,17 +148,6 @@ const ShopContextProvider = (props) => {
       toast.error(error.message);
     }
   };
-
-  useEffect(() => {
-    getProductsData();
-  }, []);
-
-  useEffect(() => {
-    if (!token && localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-      getUserCart(localStorage.getItem("token"));
-    }
-  }, []);
 
   const value = {
     navigate,
@@ -163,7 +166,8 @@ const ShopContextProvider = (props) => {
     backendUrl,
     setToken,
     token,
-    setCartItems
+    setCartItems,
+    loading
   };
 
   return (
